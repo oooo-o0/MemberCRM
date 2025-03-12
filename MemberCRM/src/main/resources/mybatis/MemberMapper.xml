@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mapper.MemberMapper">
+    <resultMap id="memberMap"
+        type="com.example.app.domain.Member">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="age" property="age" />
+        <result column="address" property="address" />
+        <result column="created" property="created" />
+        <result column="type_id" property="type.id" />
+        <result column="type_name" property="type.name" />
+    </resultMap>
+    <select id="selectMembers" resultMap="memberMap"> 
+    <![CDATA[ 
+    SELECT members.id, members.name, members.age,
+        members.address, members.created, member_types.id AS type_id, member_types.name AS type_name
+        FROM members JOIN member_types ON members.type_id = member_types.id 
+            WHERE address LIKE CONCAT('%', #{address}, '%')
+            AND age >= #{from} AND age <= #{to}
+    ]]>
+    </select>
+    <insert id="addMember" parameterType="com.example.app.domain.Member"> INSERT INTO members(name,
+        age, address, type_id, created) VALUES(#{name}, #{age}, #{address}, #{type.id}, NOW()) </insert>
+</mapper>
