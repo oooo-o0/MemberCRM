@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>会員の追加</title>
+    <style>
+        span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>会員の追加</h1>
+    <form action="" method="post" th:object="${member}">
+        <span th:errors="*{name}" class="error"></span>
+        <p>氏名: <input type="text" th:field="*{name}"></p>
+        <span th:errors="*{age}" class="error"></span>
+        <p>年齢: <input type="number" th:field="*{age}"></p>
+        <span th:errors="*{address}" class="error"></span>
+        <p>住所: <input type="text" th:field="*{address}"></p>
+        <span th:errors="*{type}" class="error"></span>
+        <p>会員種別:
+            <select th:field="*{type.id}">
+                <option value="1">通常会員</option>
+                <option value="2">プレミアム会員</option>
+
+            </select>
+        </p>
+        <input type="submit">
+    </form>
+    <p><a th:href="@{/members}">一覧に戻る</a></p>
+</body>
+
+</html>
