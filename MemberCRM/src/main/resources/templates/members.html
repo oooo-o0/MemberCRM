@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>会員一覧</title>
+</head>
+
+<body>
+    <h1>会員一覧</h1>
+    <p><a th:href="@{/members/add}">会員の追加</a></p>
+
+    <form th:action="@{/members/search}">
+        <p>
+            <input type="text" name="address" placeholder="住所">
+            <input type="submit" name="addressButton" value="住所で絞り込み">
+        </p>
+        <p>
+            <input type="number" name="from" value="0" min="0" step="1">才～
+            <input type="number" name="to" value="60" min="0" step="1">才
+            <input type="submit" name="ageButton" value="年齢で絞り込み">
+        </p>
+    </form>
+    <h2 th:if="${searchedBy}">「[[${searchedBy}]]」で絞り込み中</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>氏名</th>
+            <th>年齢</th>
+            <th>住所</th>
+            <th>会員種別</th>
+            <th>登録日</th>
+        </tr>
+
+        <tr th:each="member : ${members}">
+            <td>[[${member.id}]]</td>
+            <td>[[${member.name}]]</td>
+            <td>[[${member.age}]]</td>
+            <td>[[${member.address}]]</td>
+            <td>[[${member.type.id}]]:[[${member.type.name}]]</td>
+            <td>[[${#temporals.format(member.created,
+                'yyyy 年MM 月dd 日 HH:mm:ss')}]]</td>
+        </tr>
+    </table>
+</body>
+
+</html>
